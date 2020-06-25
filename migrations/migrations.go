@@ -5,6 +5,21 @@ import (
 	"github.com/alonelegion/go_banking_app/interfaces"
 )
 
+//type User struct {
+//	gorm.Model
+//	Username string
+//	Email    string
+//	Password string
+//}
+//
+//type Account struct {
+//	gorm.Model
+//	Type    string
+//	Name    string
+//	Balance uint
+//	UserID  uint
+//}
+
 func createAccount() {
 	db := helpers.ConnectDB()
 	users := &[2]interfaces.User{
@@ -28,7 +43,7 @@ func Migrate() {
 	User := &interfaces.User{}
 	Account := &interfaces.Account{}
 	db := helpers.ConnectDB()
-	db.AutoMigrate(&User{}, &Account{})
+	db.AutoMigrate(&User, &Account)
 	defer db.Close()
 
 	createAccount()
