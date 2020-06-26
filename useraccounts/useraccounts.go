@@ -5,6 +5,7 @@ import (
 	"github.com/alonelegion/go_banking_app/interfaces"
 )
 
+// UpdateAccount Create function update account
 func updateAccount(id uint, amount int) {
 	db := helpers.ConnectDB()
 	db.Model(&interfaces.Account{}).Where("id = ?", id).Update("balance", amount)

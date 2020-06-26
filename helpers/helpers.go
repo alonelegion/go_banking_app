@@ -1,7 +1,6 @@
 package helpers
 
 import (
-
 	"encoding/json"
 	"github.com/alonelegion/go_banking_app/interfaces"
 	"github.com/dgrijalva/jwt-go"
@@ -13,13 +12,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-
-	"github.com/alonelegion/go_banking_app/interfaces"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"golang.org/x/crypto/bcrypt"
-	"regexp"
-
 )
 
 func HandleErr(err error) {
@@ -41,9 +33,10 @@ func ConnectDB() *gorm.DB {
 	return db
 }
 
+// Create validation
 func Validation(values []interfaces.Validation) bool {
 	username := regexp.MustCompile(`^([A-Za-z0-9]{5,})+$`)
-	email := regexp.MustCompile(`^[A-Za-z0-9]+[@]+[A-Za-z0-9]+[.]+[A-Za-z0-9]+$`)
+	email := regexp.MustCompile(`^[A-Za-z0-9]+[@]+[A-Za-z0-9]+[.]+[A-Za-z]+$`)
 
 	for i := 0; i < len(values); i++ {
 		switch values[i].Valid {
@@ -64,6 +57,7 @@ func Validation(values []interfaces.Validation) bool {
 	return true
 }
 
+// Create panic handler
 func PanicHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
