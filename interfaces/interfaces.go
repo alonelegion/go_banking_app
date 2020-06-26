@@ -27,9 +27,10 @@ type ResponseUser struct {
 	ID       uint
 	Username string
 	Email    string
-	Account  []ResponseAccount
+	Accounts []ResponseAccount
 }
 
+// Create Validation interface
 type Validation struct {
 	Value string
 	Valid string
