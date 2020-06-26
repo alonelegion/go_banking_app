@@ -55,24 +55,14 @@ func login(w http.ResponseWriter, r *http.Request) {
 	apiResponse(login, w)
 }
 
-func register(w http.ResponseWriter, r *http.Request) {
-	body := readBody(r)
-
-	var formattedBody Register
-	err := json.Unmarshal(body, &formattedBody)
-	helpers.HandleErr(err)
-	register := users.Register(formattedBody.Username, formattedBody.Email, formattedBody.Password)
-
-	apiResponse(register, w)
-}
-
 func getUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	userId := vars["id"]
 	auth := r.Header.Get("Authorization")
 
 	user := users.GetUser(userId, auth)
-	apiResponse(user, w)
+	apiResponse(user, w)	
+}
 
 func register(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
