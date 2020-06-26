@@ -21,6 +21,7 @@ func prepareToken(user *interfaces.User) string {
 	return token
 }
 
+
 func prepareResponse(user *interfaces.User, accounts []interfaces.ResponseAccount, withToken bool) map[string]interface{} {
 	responseUser := &interfaces.ResponseUser{
 		ID:       user.ID,
@@ -104,7 +105,9 @@ func Register(username string, email string, pass string) map[string]interface{}
 			Balance: int(account.Balance),
 		}
 		accounts = append(accounts, respAccount)
+
 		var response = prepareResponse(user, accounts, true)
+
 
 		return response
 	} else {

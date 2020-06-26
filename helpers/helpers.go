@@ -1,6 +1,7 @@
 package helpers
 
 import (
+
 	"encoding/json"
 	"github.com/alonelegion/go_banking_app/interfaces"
 	"github.com/dgrijalva/jwt-go"
@@ -12,6 +13,13 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/alonelegion/go_banking_app/interfaces"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"golang.org/x/crypto/bcrypt"
+	"regexp"
+
 )
 
 func HandleErr(err error) {
