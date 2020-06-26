@@ -77,6 +77,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	apiResponse(user, w)
 }
 
+
 func StartApi() {
 	router := mux.NewRouter()
 	// Add panic handler middleware
