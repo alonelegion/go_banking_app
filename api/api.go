@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/alonelegion/go_banking_app/helpers"
 	"github.com/alonelegion/go_banking_app/interfaces"
+	"github.com/alonelegion/go_banking_app/useraccounts"
 	"github.com/alonelegion/go_banking_app/users"
 	"github.com/gorilla/mux"
 	"io/ioutil"
@@ -21,6 +22,13 @@ type Register struct {
 	Username string
 	Email    string
 	Password string
+}
+
+type TransactionBody struct {
+	UserId uint
+	From   uint
+	To     uint
+	Amount int
 }
 
 // Create readBody function
@@ -77,6 +85,16 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	apiResponse(user, w)
 }
 
+func transaction(w http.ResponseWriter, r *http.Request) {
+	body := readBody(r)
+	auth := r.Header.Get("Authorization")
+	var formattedBody TransactionBody
+	err := json.Unmarshal(body, &formattedBody)
+	helpers.HandleErr(err)
+
+	transaction := useraccounts.Transaction(formattedBody.UserId, formattedBody.From, formattedBody.To, formattedBody.Amount, auth)
+	apiResponse(transaction, w)
+}
 
 func StartApi() {
 	router := mux.NewRouter()
@@ -84,6 +102,7 @@ func StartApi() {
 	router.Use(helpers.PanicHandler)
 	router.HandleFunc("/login", login).Methods("POST")
 	router.HandleFunc("/register", register).Methods("POST")
+	router.HandleFunc("/transaction", transaction).Methods("POST")
 	router.HandleFunc("/user/{id}", getUser).Methods("GET")
 	fmt.Println("App is working on port :8080")
 	log.Fatal(http.ListenAndServe(":8080", router))
