@@ -2,6 +2,7 @@ package useraccounts
 
 import (
 	"fmt"
+	"github.com/alonelegion/go_banking_app/database"
 	"github.com/alonelegion/go_banking_app/helpers"
 	"github.com/alonelegion/go_banking_app/interfaces"
 	"github.com/alonelegion/go_banking_app/transactions"
@@ -9,29 +10,25 @@ import (
 
 // Update function updateAccount
 func updateAccount(id uint, amount int) interfaces.ResponseAccount {
-	db := helpers.ConnectDB()
 	account := interfaces.Account{}
 	responseAcc := interfaces.ResponseAccount{}
 
-	db.Where("id = ? ", id).First(&account)
+	database.DB.Where("id = ? ", id).First(&account)
 	account.Balance = uint(amount)
-	db.Save(&account)
+	database.DB.Save(&account)
 
 	responseAcc.ID = account.ID
 	responseAcc.Name = account.Name
 	responseAcc.Balance = int(account.Balance)
-	defer db.Close()
 	return responseAcc
 }
 
 // Create function getAccount
 func getAccount(id uint) *interfaces.Account {
-	db := helpers.ConnectDB()
 	account := &interfaces.Account{}
-	if db.Where("id = ? ", id).First(&account).RecordNotFound() {
+	if database.DB.Where("id = ? ", id).First(&account).RecordNotFound() {
 		return nil
 	}
-	defer db.Close()
 	return account
 }
 

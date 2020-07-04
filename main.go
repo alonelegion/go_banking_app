@@ -1,8 +1,11 @@
 package main
 
-import "github.com/alonelegion/go_banking_app/api"
+import (
+	"github.com/alonelegion/go_banking_app/api"
+	"github.com/alonelegion/go_banking_app/database"
+)
 
 func main() {
-	//migrations.MigrateTransactions()
+	database.InitDatabase()
 	api.StartApi()
 }

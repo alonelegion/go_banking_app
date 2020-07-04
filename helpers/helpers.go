@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/alonelegion/go_banking_app/interfaces"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"golang.org/x/crypto/bcrypt"
 	"log"
@@ -25,12 +24,6 @@ func HashAndSalt(pass []byte) string {
 	HandleErr(err)
 
 	return string(hashed)
-}
-
-func ConnectDB() *gorm.DB {
-	db, err := gorm.Open("postgres", "host=database-1.c1fzlyaabojw.eu-central-1.rds.amazonaws.com port=5432 user=postgres dbname=bankapp password=zw345b7u sslmode=disable")
-	HandleErr(err)
-	return db
 }
 
 // Create validation
